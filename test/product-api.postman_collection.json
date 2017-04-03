@@ -130,7 +130,7 @@
 							"tests[\"Response code is 200\"] = responseCode.code === 200;",
 							"responseJSON = JSON.parse(responseBody);",
 							"tests[\"Size of products is 2\"] = responseJSON.length === 2;",
-							"tests[\"Each product has an id\"] = _.every(responseJSON, function(o){return _.isObject(o) && _.isNumber(o.id)})",
+							"//tests[\"Each product has an id\"] = _.every(responseJSON, function(o){return _.isObject(o) && _.isNumber(o.id)})",
 							""
 						]
 					}
