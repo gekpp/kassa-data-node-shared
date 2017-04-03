@@ -11,8 +11,6 @@ box.cfg{}
 package.path = './?.lua;' .. package.path
 local migrations = require('migrations.manager')
 
--- Workaround for bad loaded dependency for socket
-
 function bootstrap()
     migrations.reload()
 end

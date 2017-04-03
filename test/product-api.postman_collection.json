@@ -1,0 +1,149 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Kassa: Shared: Products",
+		"_postman_id": "0f558947-1708-2aa1-171b-b9362ac55e73",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Product#1 localhost:8181/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"tests[\"Successful POST request\"] = responseCode.code === 201 || responseCode.code === 202;",
+							"responseJSON = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"product_id\", responseJSON.id);",
+							"tests[\"Body contains id\"] = 'id' in responseJSON;",
+							"tests[\"Body contains vendor_code\"] = 'vendor_code' in responseJSON;",
+							"tests[\"Body contains name\"] = 'name' in responseJSON;",
+							"tests[\"Body contains is_deleted and it is 'false'\"] = 'is_deleted' in responseJSON && responseJSON.is_deleted === false;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:8181/products",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Product #1\",\"vendor_code\":\"11111111\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8181/products/{{product_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"responseJSON = JSON.parse(responseBody);",
+							"tests[\"Body contains id and it is \"+postman.getEnvironmentVariable('product_id')] = 'id' in responseJSON && responseJSON['id'] == postman.getEnvironmentVariable('product_id');",
+							"tests[\"Body contains vendor_code\"] = 'vendor_code' in responseJSON;",
+							"tests[\"Body contains name\"] = 'name' in responseJSON;",
+							"tests[\"Body contains is_deleted and it is 'false'\"] = 'is_deleted' in responseJSON && responseJSON['is_deleted'] === false;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:8181/products/{{product_id}}",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Fetch last created product"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product#2 localhost:8181/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"tests[\"Response code is 201\"] = responseCode.code === 201;",
+							"responseJSON = JSON.parse(responseBody);",
+							"tests[\"Body contains id\"] = 'id' in responseJSON;",
+							"tests[\"Body contains vendor_code\"] = 'vendor_code' in responseJSON;",
+							"tests[\"Body contains name\"] = 'name' in responseJSON;",
+							"tests[\"Body contains is_deleted and it is 'false'\"] = 'is_deleted' in responseJSON && responseJSON['is_deleted'] === false;",
+							"",
+							"",
+							"postman.setGlobalVariable(\"product_id\", responseJSON['id']);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:8181/products",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Product #1\",\"vendor_code\":\"11111111\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get All products: localhost:8181/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"responseJSON = JSON.parse(responseBody);",
+							"tests[\"Size of products is 2\"] = responseJSON.length === 2;",
+							"tests[\"Each product has id\"] = _.every(responseJSON, function(o){return _.isObject(o) && _.isNumber(o.id)})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:8181/products",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Fetch last created product"
+			},
+			"response": []
+		}
+	]
+}
