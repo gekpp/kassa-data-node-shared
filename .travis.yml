@@ -4,7 +4,7 @@ services:
   - docker
 
 install:
-  - npm install newman
+  - npm install newman --global
 
 before_install:
   - docker pull tarantool/tarantool:1.7
