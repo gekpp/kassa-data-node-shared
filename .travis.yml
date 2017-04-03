@@ -11,7 +11,7 @@ install:
 
 before_install:
   - docker pull tarantool/tarantool:1.7
-  - docker run -d --name mytarantool  -v `pwd`/src:/opt/tarantool -p 3301:3301 -p 8181:8181 --env http.port=8181 --env CLOUD_MANAGER_URL=$CLOUD_MANAGER_URL tarantool/tarantool:1.7 tarantool /opt/tarantool/app.lua
+  - docker run -d --name mytarantool  -v `pwd`/src:/opt/tarantool -p 3301:3301 -p 8181:8181 --env http.port=8181 --env CLOUD_MANAGER_URL=$CLOUD_MANAGER_URL gekpp/tarantool-cloud-tarantool
   - docker ps -a
 
 script:
