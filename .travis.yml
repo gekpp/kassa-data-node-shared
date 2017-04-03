@@ -10,8 +10,8 @@ install:
   - npm install newman --global
 
 before_install:
-  - docker pull tarantool/tarantool:1.7
-  - docker run -d --name mytarantool  -v `pwd`/src:/opt/tarantool -p 3301:3301 -p 8181:8181 --env http.port=8181 --env CLOUD_MANAGER_URL=$CLOUD_MANAGER_URL gekpp/tarantool-cloud-tarantool
+  - docker pull gekpp/tarantool-cloud-tarantool:latest
+  - docker run -d --name mytarantool  -v `pwd`/src:/opt/tarantool -p 3301:3301 -p 8181:8181 --env http.port=8181 --env CLOUD_MANAGER_URL=$CLOUD_MANAGER_URL gekpp/tarantool-cloud-tarantool:latest
   - docker ps -a
 
 script:
